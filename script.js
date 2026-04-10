@@ -1,4 +1,4 @@
-// === Profile Picture Upload ===
+    // === Profile Picture Upload ===
 const profilePic = document.getElementById("profile-pic");
 const fileInput = document.getElementById("file-input");
 
@@ -242,7 +242,7 @@ enableDrag(skillsList);
 enableDrag(hobbiesList);
 
 // === Education Section ===
-const eduSection = document.getElementById("education");
+const eduList = document.getElementById("edu-list");
 const addEduBtn = document.getElementById("add-edu");
 
 // Function to enable editing for a record
@@ -336,7 +336,7 @@ addEduBtn.addEventListener("click", () => {
     <button class="edit-edu">✏️ Edit</button>
     <button class="delete-edu">🗑️ Delete</button>
   `;
-  eduSection.insertBefore(div, addEduBtn);
+  eduList.appendChild(div); 
   enableEducationEditing(div);
   console.log("Education record added");
 });
@@ -353,7 +353,12 @@ saveBtn.addEventListener("click", () => {
     bio: document.getElementById("bio").textContent,
     skills: Array.from(skillsList.children).map(li => li.textContent),
     hobbies: Array.from(hobbiesList.children).map(li => li.textContent),
-    education: Array.from(document.querySelectorAll(".edu-record")).map(div => div.textContent)
+    // FIXED: save education as objects
+    education: Array.from(document.querySelectorAll("#edu-list .edu-record")).map(div => ({
+      school: div.querySelector(".school").textContent.replace("School: ", ""),
+      course: div.querySelector(".course").textContent.replace("Course: ", ""),
+      year: div.querySelector(".year").textContent.replace("Year: ", "")
+    }))
   };
   localStorage.setItem("profileData", JSON.stringify(data));
   console.log("Changes saved to local storage");
@@ -370,10 +375,13 @@ window.onload = () => {
   const saved = localStorage.getItem("profileData");
   if (saved) {
     const data = JSON.parse(saved);
+
+    // Profile picture, name, bio
     profilePic.src = data.profilePic;
     document.getElementById("name").textContent = data.name;
     document.getElementById("bio").textContent = data.bio;
 
+    // Skills
     skillsList.innerHTML = "";
     data.skills.forEach(skill => {
       const li = document.createElement("li");
@@ -382,6 +390,7 @@ window.onload = () => {
       skillsList.appendChild(li);
     });
 
+    // Hobbies
     hobbiesList.innerHTML = "";
     data.hobbies.forEach(hobby => {
       const li = document.createElement("li");
@@ -390,14 +399,23 @@ window.onload = () => {
       hobbiesList.appendChild(li);
     });
 
-    const eduSection = document.getElementById("education");
-    eduSection.querySelectorAll(".edu-record").forEach(div => div.remove());
-    data.education.forEach(record => {
-      const div = document.createElement("div");
-      div.className = "edu-record";
-      div.textContent = record;
-      eduSection.appendChild(div);
-    });
+// Education
+const eduList = document.getElementById("edu-list"); // use the dedicated container
+eduList.innerHTML = "";
+data.education.forEach(ed => {
+  const div = document.createElement("div");
+  div.className = "edu-record";
+  div.innerHTML = `
+    <p class="school">School: ${ed.school}</p>
+    <p class="course">Course: ${ed.course}</p>
+    <p class="year">Year: ${ed.year}</p>
+    <button class="edit-edu">✏️ Edit</button>
+    <button class="delete-edu">🗑️ Delete</button>
+  `;
+  eduList.appendChild(div);
+
+  enableEducationEditing(div);
+});
 
     console.log("Profile restored from local storage");
   }
