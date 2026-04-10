@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Personal Profile Webpage</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Left Column: Profile --> 
+    <section id="profile" class="card">
+      <!-- placeholder picture -->
+      <img id="profile-pic"
+     src="data:image/svg+xml;utf8,
+     <svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'>
+       <circle cx='75' cy='75' r='70' fill='gray'/>
+     </svg>"
+     alt="Profile Picture"> 
+
+      <input type="file" id="file-input" style="display:none">
+      <h1 id="name">Mark Emil Sola</h1>
+      <button id="edit-name">✏️ Edit Name</button>
+      <p id="bio">This is my bio. I do not have anything to put in this bio.</p>
+      <button id="edit-bio">✏️ Edit Bio</button>
+    </section>
+
+    <!-- Right Column: Interactive Sections -->
+    <div class="right-column">
+      <!-- Skills -->
+      <section id="skills" class="card">
+        <h2>💡 Skills</h2>
+        <ul id="skills-list">
+          <li draggable="true">HTML</li>
+          <li draggable="true">CSS</li>
+          <li draggable="true">JavaScript</li>
+        </ul>
+        <button id="add-skill">➕ Add Skill</button>
+        <button id="delete-skill">🗑️ Delete Selected</button>
+      </section>
+
+      <!-- Education -->
+      <section id="education" class="card">
+        <h2>🎓 Education</h2>
+        <div class="edu-record">
+          <p class="school">School: Partido State University</p>
+          <p class="course">Course: BSIT</p>
+          <p class="year">Year: 2nd Year</p>
+          <button class="edit-edu">✏️ Edit</button>
+          <button class="delete-edu">🗑️ Delete</button>
+        </div>
+        <button id="add-edu">➕ Add Education</button>
+      </section>
+
+
+      <!-- Hobbies -->
+      <section id="hobbies" class="card">
+        <h2>🎯 Hobbies</h2>
+        <ul id="hobbies-list">
+          <li draggable="true">Reading</li>
+          <li draggable="true">Gaming</li>
+          <li draggable="true">More Gaming</li>
+        </ul>
+        <button id="add-hobby">➕ Add Hobby</button>
+        <button id="delete-hobby">🗑️ Delete Selected</button>
+      </section>
+
+      <!-- Global Controls -->
+      <section id="controls" class="card">
+        <button id="save">💾 Save</button>
+        <button id="reset">🔄 Reset</button>
+      </section>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
